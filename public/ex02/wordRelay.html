@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <word-relay start-word="캔디"></word-relay>
+            <word-relay start-word="초밥"></word-relay>
+            <word-relay start-word="비누"></word-relay>
+        </div>
+        <script>
+            //컴포넌트는 데이터를 독립적으로 다룬다.
+            //중복을 제거하는데 용이하다
+            //웹팩 : 스크립트 관리
+            Vue.component('word-relay', {
+                template: `
+                <div>
+                <div>{{word}}</div>
+            <form v-on:submit="onSubmitForm">
+                <input type="text" v-model="value">
+                <button type="submit">입력!
+                </button>
+            </form>
+            <div id="resut">{{result}}</div>
+            </div>
+                `,
+                props:['startWord'],
+                data(){
+                    return {
+                        word:this.startWord,
+                        result:'',
+                        value:'',
+                    };
+                },
+                methods:{
+                    onSubmitForm(e){
+                        e.preventDefault();
+                        if(this.word[this.word.length -1] === this.value[0]){
+                            this.result='딩동';
+                            this.word=this.value;
+                            this.value='';
+                        }else{
+                            this.result='땡';
+                            this.value='';
+                        }
+                    },
+                }
+            })
+        </script>
+        <script>
+            var app = new Vue({
+                el: '#root',
+            });
+        </script>
+    </body>
+</html>

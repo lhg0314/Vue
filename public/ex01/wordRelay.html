@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <div>
+                {{word}}
+            </div>
+            <form v-on:submit="onSubmitForm">
+                <input type="text" v-model="value">
+                <button type="submit">입력!
+                </button>
+            </form>
+            <div id="resut">{{result}}</div>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#root',
+                data: {
+                    word:'지로초',
+                    result:'',
+                    value:'',
+                },
+                methods: {
+                    onSubmitForm(e){
+                        e.preventDefault();
+                        if(this.word[this.word.length -1] === this.value[0]){
+                            this.result='딩동';
+                            this.word=this.value;
+                            this.value='';
+                        }else{
+                            this.result='땡';
+                            this.value='';
+                        }
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
