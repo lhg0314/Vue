@@ -10,6 +10,7 @@ export default {
     },
     methods:{
         onClickTd(){
+            if(this.cellData) return;
             const rootData=this.$root.$data;
             this.$set(this.$root.$data.tableData[this.rowIndex],this.cellIndex,this.$root.$data.turn);
             let win=false;
@@ -28,14 +29,24 @@ export default {
             
             if(win){
                 rootData.winner=rootData.turn;
-                rootData='O';
-                rootData.tableData=[
-                ['','',''],
-                ['','',''],
-                ['','','']
-            ];
+                rootData.turn='O';
+                rootData.tableData=[['','',''],['','',''],['','','']];
+            }else{
+                let all=true;
+                rootData.tableData.forEach((row)=>{
+                    row.forEach((cell)=>{
+                        if(!cell){
+                            all=false;
+                        }
+                    });
+                });
+                if(all){
+                    rootData.winner='';
+                    rootData.turn='O';
+                    rootData.tableData=[['','',''],['','',''],['','','']];
+                }
+                this.$root.$data.turn=this.$root.$data.turn==='O'?'X':'O';
             }
-            this.$root.$data.turn=this.$root.$data.turn==='O'?'X':'O';
         }
     }
 };
